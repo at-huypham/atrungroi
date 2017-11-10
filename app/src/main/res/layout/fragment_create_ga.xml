@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/dimen_10"
+    app:cardElevation="7dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/edtTitleCreateGA"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorBlackTransparent"
+                android:hint="Tieu de"
+                android:imeOptions="actionNext"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/edtContentCreateGA"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorBlackTransparent"
+                android:hint="Noi dung"
+                android:imeOptions="actionDone"
+                android:inputType="text" />
+
+            <ImageView
+                android:id="@+id/imgDot"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
+                android:contentDescription="@null"
+                android:layerType="software"
+                android:src="@drawable/bg_dotline" />
+
+            <TextView
+                android:id="@+id/tvInsertPictureCreateGA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawableLeft="@drawable/ic_plus"
+                android:drawablePadding="7dp"
+                android:drawableStart="@drawable/ic_plus"
+                android:text="Anh minh hoa"
+                android:textSize="17sp" />
+
+            <ImageView
+                android:id="@+id/imgIllustrationCreateGA"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_camera" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.v7.widget.CardView>
