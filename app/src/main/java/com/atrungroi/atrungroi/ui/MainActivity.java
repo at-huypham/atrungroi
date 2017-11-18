@@ -63,32 +63,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkLogin() {
-        mBtnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String email = mEdtEmail.getText().toString().trim();
-                String password = mEdtPassword.getText().toString().trim();
-                showProgressDialog();
-                if (TextUtils.isEmpty(email) && TextUtils.isEmpty(password) || TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-                    ToastUtil.showShort(getApplicationContext(), "Email và password không được rỗng");
-                    hideProgressDialog();
-                } else {
-                    mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                hideProgressDialog();
-                                startActivity(new Intent(MainActivity.this, MenuActivity.class));
-                                finish();
-                            } else {
-                                hideProgressDialog();
-                                mEdtPassword.getText().clear();
-                                Toast.makeText(MainActivity.this, "Đăng nhập thất bại!\nError: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+        String email = mEdtEmail.getText().toString().trim();
+        String password = mEdtPassword.getText().toString().trim();
+        showProgressDialog();
+        if (TextUtils.isEmpty(email) && TextUtils.isEmpty(password) || TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
+            ToastUtil.showShort(getApplicationContext(), "Email và password không được rỗng");
+            hideProgressDialog();
+        } else {
+            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        hideProgressDialog();
+                        startActivity(new Intent(MainActivity.this, MenuActivity.class));
+                        finish();
+                    } else {
+                        hideProgressDialog();
+                        mEdtPassword.getText().clear();
+                        Toast.makeText(MainActivity.this, "Đăng nhập thất bại!\nError: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     private void initView() {
