@@ -10,6 +10,7 @@
         android:orientation="vertical">
 
         <include layout="@layout/layout_toolbar" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -17,15 +18,16 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="7dp"
             android:orientation="vertical">
-
             <EditText
-                android:id="@+id/edtUserNameRegister"
+                android:id="@+id/edtEmailRegister"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorBlackTransparent"
-                android:hint="Tên đăng nhập"
+                android:hint="Email"
                 android:imeOptions="actionNext"
                 android:inputType="text" />
+
+
 
             <EditText
                 android:id="@+id/edtPassRegister"
@@ -37,11 +39,11 @@
                 android:inputType="textPassword" />
 
             <EditText
-                android:id="@+id/edtEmailRegister"
+                android:id="@+id/edtName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorBlackTransparent"
-                android:hint="Email"
+                android:hint="Họ và tên"
                 android:imeOptions="actionNext"
                 android:inputType="text" />
 
@@ -51,15 +53,6 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorBlackTransparent"
                 android:hint="Địa chỉ"
-                android:imeOptions="actionNext"
-                android:inputType="text" />
-
-            <EditText
-                android:id="@+id/edtCompanyRegister"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorBlackTransparent"
-                android:hint="Công ty"
                 android:imeOptions="actionNext"
                 android:inputType="text" />
 
@@ -98,11 +91,11 @@
                     android:inputType="number" />
 
                 <RadioGroup
+                    android:id="@+id/radioGender"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:id="@+id/radioGender"
                     android:orientation="horizontal">
 
                     <RadioButton
@@ -117,19 +110,18 @@
 
                 </RadioGroup>
             </LinearLayout>
+            <Button
+                android:id="@+id/btnSignin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/bg_button_close"
+                android:text="Đăng ký"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp" />
 
         </LinearLayout>
-
-        <Button
-            android:id="@+id/btnSignin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/bg_button_close"
-            android:text="Đăng ký"
-            android:textColor="@color/colorWhite"
-            android:textSize="20sp" />
     </LinearLayout>
 </ScrollView>

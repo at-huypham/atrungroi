@@ -40,11 +40,10 @@ import com.google.firebase.database.FirebaseDatabase;
 public class RegisterActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private TextView mTvToolbar;
-    private EditText mEdtUsername;
+    private EditText mEdtName;
     private EditText mEdtPassword;
     private EditText mEdtEmail;
     private EditText mEdtAddress;
-    private EditText mEdtCompany;
     private EditText mEdtAge;
     private EditText mEdtHomeTown;
     private EditText mEdtHobby;
@@ -72,11 +71,10 @@ public class RegisterActivity extends AppCompatActivity {
     private void initView() {
         mToolbar = findViewById(R.id.toobar);
         mTvToolbar = findViewById(R.id.tvToolbar);
-        mEdtUsername = findViewById(R.id.edtUserNameRegister);
+        mEdtName = findViewById(R.id.edtName);
         mEdtPassword = findViewById(R.id.edtPassRegister);
         mEdtEmail = findViewById(R.id.edtEmailRegister);
         mEdtAddress = findViewById(R.id.edtAddressRegister);
-        mEdtCompany = findViewById(R.id.edtCompanyRegister);
         mEdtAge = findViewById(R.id.edtAgeRegister);
         mEdtHomeTown = findViewById(R.id.edtHomeTown);
         mEdtHobby = findViewById(R.id.edtHobby);
@@ -99,11 +97,10 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void setButtonSignin() {
         mBtnSignin.setEnabled(false);
-        mEdtUsername.addTextChangedListener(textWatcher);
+        mEdtName.addTextChangedListener(textWatcher);
         mEdtPassword.addTextChangedListener(textWatcher);
         mEdtEmail.addTextChangedListener(textWatcher);
         mEdtAddress.addTextChangedListener(textWatcher);
-        mEdtCompany.addTextChangedListener(textWatcher);
         mEdtAge.addTextChangedListener(textWatcher);
     }
 
@@ -128,7 +125,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         @Override
         public void afterTextChanged(Editable editable) {
-            if (mEdtUsername.getText().toString().length() == 0 || mEdtPassword.getText().toString().length() == 0
+            if (mEdtName.getText().toString().length() == 0 || mEdtPassword.getText().toString().length() == 0
                     || mEdtAddress.getText().toString().length() == 0 || mEdtEmail.getText().toString().length() == 0
                     || mEdtAge.getText().toString().length() == 0) {
                 mBtnSignin.setEnabled(false);
@@ -147,17 +144,15 @@ public class RegisterActivity extends AppCompatActivity {
     };
 
     private void setupRegisterFirebase() {
-        final String userName = mEdtUsername.getText().toString().trim();
+        final String name = mEdtName.getText().toString().trim();
         final String password = mEdtPassword.getText().toString().trim();
         final String email = mEdtEmail.getText().toString().trim();
         final String address = mEdtAddress.getText().toString().trim();
-        final String company = mEdtCompany.getText().toString().trim();
         final int age = Integer.parseInt(mEdtAge.getText().toString().trim());
         final String hownTown = mEdtHomeTown.getText().toString().trim();
         final String hobby = mEdtHobby.getText().toString().trim();
         final String gender = getValueGender();
         showProgressDialog();
-        Log.d(ConstantUtils.TAG, userName + password + email + address + company + age);
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -166,7 +161,7 @@ public class RegisterActivity extends AppCompatActivity {
                     if (firebaseUser != null) {
                         hideProgressDialog();
                         ToastUtil.showShort(getApplicationContext(), "Đăng ký tài khoản thành công!");
-                        createNewUser(firebaseUser.getUid(), userName, password, email, address, company,hownTown,hobby,age, gender);
+                        createNewUser(firebaseUser.getUid(), name, password, email, address,hownTown,hobby,age, gender);
                         startActivity(new Intent(RegisterActivity.this, MenuActivity.class));
                     }
                 } else {
@@ -189,9 +184,9 @@ public class RegisterActivity extends AppCompatActivity {
         mProgressDialog.show();
     }
 
-    public void createNewUser(String idUser, String userName, String password, String email, String address, String company, String hownTown, String hobby, int age, String gender) {
+    public void createNewUser(String idUser, String userName, String password, String email, String address, String hownTown, String hobby, int age, String gender) {
         imagesAvatarUrl = "https://firebasestorage.googleapis.com/v0/b/bloodbank-1e50e.appspot.com/o/avatar_default.jpg?alt=media&token=045117c4-b4b0-45a4-a034-b2f74e3d522c";
-        user = new User(idUser, userName, password, email, address, company,hownTown,hobby,age, gender, imagesAvatarUrl);
+        user = new User(idUser, userName, password, email, address,hownTown,hobby,age, gender, imagesAvatarUrl);
         mFirebaseDatabase.child(ConstantUtils.TREE_USER).child(idUser).setValue(user);
     }
 
