@@ -161,7 +161,6 @@ public class MenuActivity extends AppCompatActivity {
                         ToastUtil.showShort(getApplicationContext(), "Đăng xuất thành công");
                         startActivity(new Intent(MenuActivity.this, MainActivity.class));
                         finish();
-
                 }
                 showMenu(showMenu);
             }

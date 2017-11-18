@@ -1,6 +1,7 @@
 package com.atrungroi.atrungroi.ui;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -12,6 +13,10 @@ import android.widget.Toast;
 import com.atrungroi.atrungroi.R;
 import com.atrungroi.atrungroi.models.News;
 import com.atrungroi.atrungroi.models.Result;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,14 +40,28 @@ public class TestFirebaseActivity extends AppCompatActivity {
     private Button mBtnChangeData;
     private EditText mEdtChange;
 
+    private EditText mEdtEmail;
+    private EditText mEdtPass;
+
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_firebase);
+
+        mAuth = FirebaseAuth.getInstance();
         initView();
+
+        mBtnChangeData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkAuth();
+            }
+        });
 //        setData();
-        takeDataFromServer();
-        changeDataServerFromApp();
+//        takeDataFromServer();
+//        changeDataServerFromApp();
     }
 
     private void initView(){
@@ -50,6 +69,10 @@ public class TestFirebaseActivity extends AppCompatActivity {
         mBtnChangeData = findViewById(R.id.btnChangeData);
         mEdtChange = findViewById(R.id.edtChangeData);
         mDatabaseReference = FirebaseDatabase.getInstance().getReference();
+
+        mEdtEmail = findViewById(R.id.email);
+        mEdtPass = findViewById(R.id.pass);
+
     }
 
     private void setData() {
@@ -135,5 +158,20 @@ public class TestFirebaseActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void checkAuth(){
+        String e = mEdtEmail.getText().toString();
+        String p = mEdtPass.getText().toString();
+
+        mAuth.createUserWithEmailAndPassword("huypham173@gmail.com", "Huy@123456780")
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()){
+                            Toast.makeText(TestFirebaseActivity.this, "ok", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 }

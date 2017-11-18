@@ -53,6 +53,7 @@
             android:name=".ui.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
+
         </activity>
 
         <activity android:name=".ui.TestFirebaseActivity">
