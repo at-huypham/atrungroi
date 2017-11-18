@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -28,6 +29,7 @@ import com.atrungroi.atrungroi.ui.MainActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -68,6 +70,8 @@ public class CreateGAFragment extends Fragment {
     private Button mBtnDatePickerEnd;
     private Button mBtnTimePickerEnd;
     private int mYear, mMonth, mDay, mHour, mMinute;
+    private CheckBox mCbQR;
+    private boolean isCheckedQR = false;
 
     @Override
 
@@ -98,6 +102,8 @@ public class CreateGAFragment extends Fragment {
         mBtnDatePickerStart = view.findViewById(R.id.btnDateStart);
         mBtnTimePickerEnd = view.findViewById(R.id.btnTimeEnd);
         mBtnDatePickerEnd = view.findViewById(R.id.btnDateEnd);
+        mCbQR = view.findViewById(R.id.cbQR);
+
 
     }
 
@@ -232,6 +238,14 @@ public class CreateGAFragment extends Fragment {
                             }
                         }, mHour, mMinute, false);
                 timePickerDialog.show();
+
+            }
+        });
+        mCbQR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isCheckedQR = ((CheckBox) view).isChecked();
+//                ToastUtil.showShort(getActivity(), String.valueOf(isCheckedQR));
             }
         });
     }
@@ -334,8 +348,8 @@ public class CreateGAFragment extends Fragment {
     }
 
     private void createEventGiveAway(String idEvent, String title, String dateTimeStart, String dateTimeEnd, String content, String imagesEvent, String idUser) {
-
-        Event event = new Event(idEvent, title, dateTimeStart, dateTimeEnd, getTimeCurrent(), content, imagesEvent, idUser);
+        FirebaseUser firebaseUser = mFirebaseAuth.getCurrentUser();
+        Event event = new Event(idEvent, title, dateTimeStart, dateTimeEnd, getTimeCurrent(), content, imagesEvent, idUser,firebaseUser.getDisplayName(), String.valueOf(isCheckedQR));
         mFirebaseDatabase.child(ConstantUtils.TREE_EVENT).child(idEvent).setValue(event);
         startActivity(new Intent(getActivity(), MainActivity.class));
         getActivity().finish();

@@ -7,13 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.atrungroi.atrungroi.R;
-import com.atrungroi.atrungroi.custom.TicketView;
-import com.atrungroi.atrungroi.models.News;
+import com.atrungroi.atrungroi.models.Event;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -22,11 +21,11 @@ import java.util.List;
  */
 
 public class ListGAAdapter extends RecyclerView.Adapter<ListGAAdapter.ViewHolder> {
-    private List<News> mNews;
+    private List<Event> mNews;
     private Context mContext;
     private OnClickPostListener mPostListener;
 
-    public ListGAAdapter(List<News> news, Context context) {
+    public ListGAAdapter(List<Event> news, Context context) {
         this.mNews = news;
         this.mContext = context;
     }
@@ -40,11 +39,6 @@ public class ListGAAdapter extends RecyclerView.Adapter<ListGAAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.setData(position);
-        if (mNews.get(position).getImage() == 0) {
-            holder.mImgIllustration.setVisibility(View.GONE);
-        } else {
-            holder.mImgIllustration.setVisibility(View.VISIBLE);
-        }
     }
 
     @Override
@@ -56,6 +50,8 @@ public class ListGAAdapter extends RecyclerView.Adapter<ListGAAdapter.ViewHolder
         private TextView mTvTittleGA;
         private TextView mTvContentGA;
         private ImageView mImgIllustration;
+        private TextView mTvTimePostEnd;
+        private TextView mTvNameUserPost;
         private LinearLayout mLlTicket;
 
         public ViewHolder(View itemView) {
@@ -64,14 +60,18 @@ public class ListGAAdapter extends RecyclerView.Adapter<ListGAAdapter.ViewHolder
             mTvContentGA = itemView.findViewById(R.id.tvContentGA);
             mImgIllustration = itemView.findViewById(R.id.imgIllustration);
             mLlTicket = itemView.findViewById(R.id.llTicket);
+            mTvTimePostEnd = itemView.findViewById(R.id.tvTimePostEnd);
+            mTvNameUserPost = itemView.findViewById(R.id.tvNameUserPost);
             mLlTicket.setOnClickListener(this);
         }
 
         private void setData(int position) {
-            News news = mNews.get(position);
-            mTvContentGA.setText(news.getContent());
-            mTvTittleGA.setText(news.getTitle());
-            mImgIllustration.setImageResource(news.getImage());
+            Event event = mNews.get(position);
+            mTvContentGA.setText(event.getContent());
+            mTvTittleGA.setText(event.getTitle());
+            mTvTimePostEnd.setText(event.getDateTimeEnd());
+            mTvNameUserPost.setText(event.getNameUser());
+            loadImageFromUrl(event.getImagesEvent(), mImgIllustration);
         }
 
         @Override
@@ -87,6 +87,16 @@ public class ListGAAdapter extends RecyclerView.Adapter<ListGAAdapter.ViewHolder
             }
         }
     }
+
+    private void loadImageFromUrl(String url, ImageView imageView) {
+        Picasso.with(mContext.getApplicationContext())
+                .load(url)
+                .placeholder(R.drawable.ic_logo_red)
+                .error(R.drawable.ic_logo_red)
+                .resize(500, 500)
+                .into(imageView);
+    }
+
 
     public interface OnClickPostListener{
         void clickPost(int position, View view);

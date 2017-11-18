@@ -2,6 +2,7 @@ package com.atrungroi.atrungroi.ui;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +17,6 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.atrungroi.atrungroi.R;
 import com.atrungroi.atrungroi.models.User;
@@ -25,11 +24,11 @@ import com.atrungroi.atrungroi.pref.ConstantUtils;
 import com.atrungroi.atrungroi.pref.ToastUtil;
 import com.atrungroi.atrungroi.ui.menu.MenuActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -166,10 +165,26 @@ public class RegisterActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     FirebaseUser firebaseUser = auth.getCurrentUser();
                     if (firebaseUser != null) {
-                        hideProgressDialog();
-                        ToastUtil.showShort(getApplicationContext(), "Đăng ký tài khoản thành công!");
                         createNewUser(firebaseUser.getUid(), name, password, email, address, hownTown, hobby, age, gender);
-                        startActivity(new Intent(RegisterActivity.this, MenuActivity.class));
+                        UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
+                                .setDisplayName(name)
+                                .setPhotoUri(Uri.parse(imagesAvatarUrl))
+                                .build();
+                        firebaseUser.updateProfile(profileUpdate).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    hideProgressDialog();
+                                    ToastUtil.showShort(getApplicationContext(), "Đăng ký tài khoản thành công!");
+                                    startActivity(new Intent(RegisterActivity.this, MenuActivity.class));
+                                    finish();
+
+                                } else {
+                                    hideProgressDialog();
+                                    ToastUtil.showShort(getApplicationContext(), "Error" + task.getException().getLocalizedMessage());
+                                }
+                            }
+                        });
                     }
                 } else {
                     hideProgressDialog();

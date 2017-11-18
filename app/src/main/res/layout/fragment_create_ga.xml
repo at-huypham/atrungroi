@@ -152,7 +152,7 @@
             <EditText
                 android:id="@+id/edtContentCreateGA"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="118dp"
                 android:layout_marginBottom="5dp"
                 android:gravity="top|start"
                 android:hint="Nội dung"
@@ -163,6 +163,11 @@
                 android:minHeight="80dp"
                 android:scrollbars="vertical" />
 
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/cbQR"
+                android:text="Có mã QR"/>
             <ImageView
                 android:id="@+id/imgDot"
                 android:layout_width="match_parent"
