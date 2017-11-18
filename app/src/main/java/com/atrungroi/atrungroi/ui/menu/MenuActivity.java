@@ -75,12 +75,12 @@ public class MenuActivity extends AppCompatActivity {
 
     private void initRecyclerViewMenu() {
         mMenuObjects = new ArrayList<>();
-        mMenuObjects.add(new MenuObject("Danh sách give away", R.drawable.ic_list_ga));
-        mMenuObjects.add(new MenuObject("Give away đã tham gia", R.drawable.ic_approve_ga));
-        mMenuObjects.add(new MenuObject("Tạo give away mới", R.drawable.ic_create_ga));
-        mMenuObjects.add(new MenuObject("Kết quả give away", R.drawable.ic_win_ga));
-        mMenuObjects.add(new MenuObject("Thông tin", R.drawable.ic_setting));
-        mMenuObjects.add(new MenuObject("Đăng xuất", R.drawable.ic_setting));
+        mMenuObjects.add(new MenuObject("Danh sách give away", R.drawable.ic_list_black));
+        mMenuObjects.add(new MenuObject("Give away đã tham gia", R.drawable.ic_playlist_add_check_black));
+        mMenuObjects.add(new MenuObject("Tạo give away mới", R.drawable.ic_add_box_black));
+        mMenuObjects.add(new MenuObject("Kết quả give away", R.drawable.ic_supervisor_account_black));
+        mMenuObjects.add(new MenuObject("Thông tin", R.drawable.ic_settings_black));
+        mMenuObjects.add(new MenuObject("Đăng xuất", R.drawable.ic_exit_to_app_black));
 
         mMenuAdapter = new MenuAdapter(this, mMenuObjects, new MenuAdapter.OnItemClickListener() {
             @Override
