@@ -13,6 +13,6 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        SystemClock.sleep(TimeUnit.SECONDS.toMillis(2));
+        SystemClock.sleep(TimeUnit.SECONDS.toMillis(0));
     }
 }
