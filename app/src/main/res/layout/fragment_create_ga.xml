@@ -21,7 +21,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorBlackTransparent"
-                android:hint="Tieu de"
+                android:hint="Tiêu đề"
+                android:imeOptions="actionNext"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/edtTimeGAStart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorBlackTransparent"
+                android:hint="Thời gian bắt đầu"
+                android:imeOptions="actionNext"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/edtTimeGAEnd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorBlackTransparent"
+                android:hint="Thời gian kết thúc"
                 android:imeOptions="actionNext"
                 android:inputType="text" />
 
@@ -29,10 +47,15 @@
                 android:id="@+id/edtContentCreateGA"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorBlackTransparent"
-                android:hint="Noi dung"
-                android:imeOptions="actionDone"
-                android:inputType="text" />
+                android:layout_marginBottom="5dp"
+                android:gravity="top|start"
+                android:hint="Mô tả nội dung"
+                android:inputType="textMultiLine"
+                android:labelFor="@+id/edtContentCreateGA"
+                android:maxHeight="150dp"
+                android:maxLines="5"
+                android:minHeight="80dp"
+                android:scrollbars="vertical" />
 
             <ImageView
                 android:id="@+id/imgDot"
@@ -58,10 +81,15 @@
             <ImageView
                 android:id="@+id/imgIllustrationCreateGA"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="400px"
                 android:contentDescription="@null"
                 android:src="@drawable/ic_camera" />
 
+            <Button
+                android:id="@+id/btnPostGA"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Đăng bài" />
         </LinearLayout>
     </ScrollView>
 

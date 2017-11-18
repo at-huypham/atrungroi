@@ -4,21 +4,31 @@ package com.atrungroi.atrungroi.models
  * Created by huyphamna on 18/11/2017.
  */
 class User {
-    var userName: String? = ""
+    var idUser: String? = ""
+    var name: String? = ""
     var password: String? = ""
     var email: String? = ""
     var address: String? = ""
-    var company: String? = ""
+    var homeTown: String? = ""
+    var hobby: String? = ""
     var age: Int? = 0
+    var gender: String? = ""
+    var avatar: String? = ""
+
 
     constructor()
-
-    constructor(userName: String?, password: String?, email: String?, address: String?, company: String?, age: Int?) {
-        this.userName = userName
+    constructor(idUser: String?, name: String?, password: String?, email: String?, address: String?, homeTown: String?, hobby: String?, age: Int?, gender: String?, avatar: String?) {
+        this.idUser = idUser
+        this.name = name
         this.password = password
         this.email = email
         this.address = address
-        this.company = company
+        this.homeTown = homeTown
+        this.hobby = hobby
         this.age = age
+        this.gender = gender
+        this.avatar = avatar
     }
+
+
 }
