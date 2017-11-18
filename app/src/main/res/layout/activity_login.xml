@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_background_main">
+    android:background="@drawable/bg_background_gradient_red_pink">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,16 +21,18 @@
             android:id="@+id/edtEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="30dp"
-            android:backgroundTint="@android:color/transparent"
-            android:drawableLeft="@drawable/ic_account"
-            android:drawablePadding="20dp"
-            android:drawableStart="@drawable/ic_account"
-            android:hint="Email"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="90dp"
+            android:background="@drawable/bg_edit_text_trans"
+            android:hint="email"
+            android:textColorHint="@color/colorFlatWhiteDisable"
+            android:textColor="@color/colorFlatWhite"
+            android:gravity="center"
             android:imeOptions="actionNext"
             android:inputType="textEmailAddress"
             android:paddingEnd="10dp"
@@ -43,16 +45,18 @@
             android:id="@+id/edtPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginStart="40dp"
             android:layout_marginTop="10dp"
-            android:backgroundTint="@android:color/transparent"
-            android:drawableLeft="@drawable/ic_pass"
-            android:drawablePadding="20dp"
-            android:drawableStart="@drawable/ic_pass"
-            android:hint="Mật khẩu"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp"
+            android:background="@drawable/bg_edit_text_trans"
+            android:hint="mật khẩu"
+            android:textColorHint="@color/colorFlatWhiteDisable"
+            android:textColor="@color/colorFlatWhite"
+            android:gravity="center"
             android:imeOptions="actionDone"
             android:inputType="textPassword"
             android:paddingEnd="10dp"
@@ -71,43 +75,9 @@
             android:layout_marginStart="40dp"
             android:layout_marginTop="50dp"
             android:text="Đăng nhập"
-            android:background="@drawable/bg_button_close"
-            android:textColor="@color/colorWhite"
+            android:background="@drawable/bg_button_flat_white"
+            android:textColor="@color/k_color_1"
             android:textSize="20sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <View
-                android:layout_width="100dp"
-                android:layout_height="1dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@color/colorRed700" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginTop="7dp"
-                android:fontFamily="@font/funky"
-                android:text="hoặc"
-                android:textColor="@color/colorRed700"
-                android:textSize="30sp" />
-
-            <View
-                android:layout_width="100dp"
-                android:layout_height="1dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:background="@color/colorRed700" />
-
-        </LinearLayout>
 
         <Button
             android:id="@+id/btnRegister"
@@ -117,9 +87,10 @@
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:layout_marginStart="40dp"
-            android:background="@drawable/bg_button_open"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_button_flat_white"
             android:text="Tạo tài khoản"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/k_color_1"
             android:textSize="20sp" />
     </LinearLayout>
-</ScrollView>
+</android.support.v4.widget.NestedScrollView>

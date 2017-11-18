@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_background_main">
+    android:background="@color/colorFlatWhite">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,10 +20,13 @@
             android:orientation="vertical">
 
             <EditText
+
                 android:id="@+id/edtEmailRegister"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorBlackTransparent"
+                android:paddingTop="16dp"
+                android:paddingBottom="12dp"
+                android:backgroundTint="@color/k_color_1"
                 android:hint="Email"
                 android:imeOptions="actionNext"
                 android:inputType="text" />
@@ -34,8 +37,10 @@
                 android:id="@+id/edtPassRegister"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorBlackTransparent"
+                android:backgroundTint="@color/k_color_1"
                 android:hint="Mật khẩu"
+                android:paddingTop="16dp"
+                android:paddingBottom="12dp"
                 android:imeOptions="actionNext"
                 android:inputType="textPassword" />
 
@@ -43,8 +48,10 @@
                 android:id="@+id/edtName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorBlackTransparent"
+                android:backgroundTint="@color/k_color_1"
                 android:hint="Họ và tên"
+                android:paddingTop="16dp"
+                android:paddingBottom="12dp"
                 android:imeOptions="actionNext"
                 android:inputType="text" />
 
@@ -52,8 +59,10 @@
                 android:id="@+id/edtHomeTown"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorBlackTransparent"
+                android:backgroundTint="@color/k_color_1"
                 android:hint="Quê Quán"
+                android:paddingTop="16dp"
+                android:paddingBottom="12dp"
                 android:imeOptions="actionNext"
                 android:inputType="text" />
 
@@ -61,8 +70,10 @@
                 android:id="@+id/edtHobby"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorBlackTransparent"
+                android:backgroundTint="@color/k_color_1"
                 android:hint="Sở thích"
+                android:paddingTop="16dp"
+                android:paddingBottom="12dp"
                 android:imeOptions="actionNext"
                 android:inputType="text" />
 
@@ -71,8 +82,10 @@
                 android:id="@+id/edtAddressRegister"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorBlackTransparent"
+                android:backgroundTint="@color/k_color_1"
                 android:hint="Địa chỉ"
+                android:paddingTop="16dp"
+                android:paddingBottom="12dp"
                 android:imeOptions="actionNext"
                 android:inputType="text" />
 
@@ -87,8 +100,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:backgroundTint="@color/colorBlackTransparent"
+                    android:backgroundTint="@color/k_color_1"
                     android:hint="Tuổi"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="12dp"
                     android:imeOptions="actionDone"
                     android:inputType="number" />
 
@@ -121,9 +136,9 @@
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:layout_marginTop="30dp"
-            android:background="@drawable/bg_button_close"
+            android:background="@drawable/bg_background_k_color_1"
             android:text="Đăng ký"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorFlatWhite"
             android:textSize="20sp" />
     </LinearLayout>
-</ScrollView>
+</android.support.v4.widget.NestedScrollView>

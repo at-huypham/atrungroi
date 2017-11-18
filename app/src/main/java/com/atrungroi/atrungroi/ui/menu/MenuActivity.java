@@ -174,7 +174,7 @@ public class MenuActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_close);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
         }
         mTvToolbar.setText("Danh sách give away");
     }
@@ -185,7 +185,7 @@ public class MenuActivity extends AppCompatActivity {
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 if (getSupportActionBar() != null) {
-                    getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_open);
+                    getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
                 }
             }
 
@@ -193,14 +193,15 @@ public class MenuActivity extends AppCompatActivity {
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
                 if (getSupportActionBar() != null) {
-                    getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_close);
+                    getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
                 }
             }
 
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 super.onDrawerSlide(drawerView, slideOffset);
-                mLlContainer.setTranslationX(slideOffset * drawerView.getWidth());
+                //mLlContainer.setTranslationX(slideOffset * drawerView.getWidth());
+
             }
         };
 

@@ -12,7 +12,9 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <ImageView
@@ -30,13 +32,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:text="vbwkbvwjknbj"
-            android:textSize="18sp" />
-
+            android:textColor="@color/colorBlack"
+            android:textSize="14sp" />
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_margin="10dp"
-        android:background="@color/colorBlack" />
 </LinearLayout>

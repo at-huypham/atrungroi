@@ -109,13 +109,13 @@ public class ListGAFragment extends Fragment {
         mAdapter = new ListGAAdapter(mNews, getContext());
         mRecyclerViewListGA.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerViewListGA.setAdapter(mAdapter);
-        mRecyclerViewListGA.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-                int position = parent.getChildAdapterPosition(view);
-                outRect.set(0, position == 0 ? 20 : 5, 0, 7);
-            }
-        });
+//        mRecyclerViewListGA.addItemDecoration(new RecyclerView.ItemDecoration() {
+//            @Override
+//            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+//                int position = parent.getChildAdapterPosition(view);
+//                outRect.set(0, position == 0 ? 20 : 5, 0, 7);
+//            }
+//        });
 
         mAdapter.setPostListener(new ListGAAdapter.OnClickPostListener() {
             @Override
