@@ -21,18 +21,41 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorBlackTransparent"
-                android:hint="Tieu de"
+                android:hint="Tiêu đề"
+                android:imeOptions="actionNext"
+                android:inputType="text" />
+            <EditText
+                android:id="@+id/edtTimeGAStart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorBlackTransparent"
+                android:hint="Thời gian bắt đầu"
                 android:imeOptions="actionNext"
                 android:inputType="text" />
 
             <EditText
-                android:id="@+id/edtContentCreateGA"
+                android:id="@+id/edtTimeGAEnd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorBlackTransparent"
-                android:hint="Noi dung"
-                android:imeOptions="actionDone"
+                android:hint="Thời gian kết thúc"
+                android:imeOptions="actionNext"
                 android:inputType="text" />
+            <EditText
+                android:labelFor="@+id/edtContentCreateGA"
+                android:inputType="textMultiLine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="80dp"
+                android:maxHeight="150dp"
+                android:hint="Mô tả nội dung"
+                android:id="@+id/edtContentCreateGA"
+                android:scrollbars="vertical"
+                android:gravity="top|start"
+                android:layout_marginBottom="5dp"
+                android:maxLines="5"/>
+
+
 
             <ImageView
                 android:id="@+id/imgDot"
@@ -58,10 +81,14 @@
             <ImageView
                 android:id="@+id/imgIllustrationCreateGA"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="400px"
                 android:contentDescription="@null"
                 android:src="@drawable/ic_camera" />
-
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnPostGA"
+                android:text="Đăng bài"/>
         </LinearLayout>
     </ScrollView>
 

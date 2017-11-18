@@ -2,6 +2,7 @@ package com.atrungroi.atrungroi.ui;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,17 +15,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.atrungroi.atrungroi.R;
+import com.atrungroi.atrungroi.models.User;
+import com.atrungroi.atrungroi.pref.ConstantUtils;
+import com.atrungroi.atrungroi.pref.ToastUtil;
 import com.atrungroi.atrungroi.ui.menu.MenuActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Created by huyphamna.
@@ -39,24 +46,28 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText mEdtAddress;
     private EditText mEdtCompany;
     private EditText mEdtAge;
-    private Button mBtnSignIn;
-
-//    private ProgressDialog mProgressDialog = new ProgressDialog(this);
-    private FirebaseAuth mAuth;
+    private EditText mEdtHomeTown;
+    private EditText mEdtHobby;
+    private RadioGroup radioGroupGender;
+    private Button mBtnSignin;
+    private ProgressDialog mProgressDialog;
+    private FirebaseAuth auth;
+    private DatabaseReference mFirebaseDatabase;
+    private User user;
+    private String imagesAvatarUrl;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        initFirebase();
+        mFirebaseDatabase = FirebaseDatabase.getInstance().getReference();
+        auth = FirebaseAuth.getInstance();
         initView();
         initToolbar();
-        setButtonSignIn();
+        setButtonSignin();
+
     }
 
-    private void initFirebase() {
-        mAuth = FirebaseAuth.getInstance();
-    }
 
     private void initView() {
         mToolbar = findViewById(R.id.toobar);
@@ -67,7 +78,10 @@ public class RegisterActivity extends AppCompatActivity {
         mEdtAddress = findViewById(R.id.edtAddressRegister);
         mEdtCompany = findViewById(R.id.edtCompanyRegister);
         mEdtAge = findViewById(R.id.edtAgeRegister);
-        mBtnSignIn = findViewById(R.id.btnSignin);
+        mEdtHomeTown = findViewById(R.id.edtHomeTown);
+        mEdtHobby = findViewById(R.id.edtHobby);
+        mBtnSignin = findViewById(R.id.btnSignin);
+        radioGroupGender = findViewById(R.id.radioGender);
     }
 
     private void initToolbar() {
@@ -83,8 +97,8 @@ public class RegisterActivity extends AppCompatActivity {
         mTvToolbar.setText("Đăng ký");
     }
 
-    private void setButtonSignIn() {
-        mBtnSignIn.setEnabled(false);
+    private void setButtonSignin() {
+        mBtnSignin.setEnabled(false);
         mEdtUsername.addTextChangedListener(textWatcher);
         mEdtPassword.addTextChangedListener(textWatcher);
         mEdtEmail.addTextChangedListener(textWatcher);
@@ -117,58 +131,81 @@ public class RegisterActivity extends AppCompatActivity {
             if (mEdtUsername.getText().toString().length() == 0 || mEdtPassword.getText().toString().length() == 0
                     || mEdtAddress.getText().toString().length() == 0 || mEdtEmail.getText().toString().length() == 0
                     || mEdtAge.getText().toString().length() == 0) {
-                mBtnSignIn.setEnabled(false);
-                mBtnSignIn.setBackground(getResources().getDrawable(R.drawable.bg_button_close));
+                mBtnSignin.setEnabled(false);
+                mBtnSignin.setBackground(getResources().getDrawable(R.drawable.bg_button_close));
             } else {
-                mBtnSignIn.setEnabled(true);
-                mBtnSignIn.setBackground(getResources().getDrawable(R.drawable.bg_button_open));
-                mBtnSignIn.setOnClickListener(new View.OnClickListener() {
+                mBtnSignin.setEnabled(true);
+                mBtnSignin.setBackground(getResources().getDrawable(R.drawable.bg_button_open));
+                mBtnSignin.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        setFirebase();
-                        Toast.makeText(RegisterActivity.this, "da nhan", Toast.LENGTH_SHORT).show();
+                        setupRegisterFirebase();
                     }
                 });
             }
         }
     };
 
-    private void setFirebase() {
-        String email = mEdtEmail.getText().toString();
-        String password = mEdtPassword.getText().toString();
-
-        Toast.makeText(this, "" + email + password, Toast.LENGTH_SHORT).show();
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Toast.makeText(RegisterActivity.this, "" + task, Toast.LENGTH_SHORT).show();
-                        if (task.isSuccessful()) {
-                            startActivity(new Intent(RegisterActivity.this, MainActivity.class));
-                        } else {
-                            Toast.makeText(RegisterActivity.this, "Error", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }).addOnFailureListener(this, new OnFailureListener() {
+    private void setupRegisterFirebase() {
+        final String userName = mEdtUsername.getText().toString().trim();
+        final String password = mEdtPassword.getText().toString().trim();
+        final String email = mEdtEmail.getText().toString().trim();
+        final String address = mEdtAddress.getText().toString().trim();
+        final String company = mEdtCompany.getText().toString().trim();
+        final int age = Integer.parseInt(mEdtAge.getText().toString().trim());
+        final String hownTown = mEdtHomeTown.getText().toString().trim();
+        final String hobby = mEdtHobby.getText().toString().trim();
+        final String gender = getValueGender();
+        showProgressDialog();
+        Log.d(ConstantUtils.TAG, userName + password + email + address + company + age);
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(RegisterActivity.this, "Loi auth" + e, Toast.LENGTH_SHORT).show();
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    FirebaseUser firebaseUser = auth.getCurrentUser();
+                    if (firebaseUser != null) {
+                        hideProgressDialog();
+                        ToastUtil.showShort(getApplicationContext(), "Đăng ký tài khoản thành công!");
+                        createNewUser(firebaseUser.getUid(), userName, password, email, address, company,hownTown,hobby,age, gender);
+                        startActivity(new Intent(RegisterActivity.this, MenuActivity.class));
+                    }
+                } else {
+                    hideProgressDialog();
+                    ToastUtil.showLong(getApplicationContext(), "Đăng ký thất bại! \n Error: " + task.getException().getMessage());
+                }
             }
         });
+
     }
+
+    private void hideProgressDialog() {
+        mProgressDialog.dismiss();
+    }
+
+    public void showProgressDialog() {
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage("Đang xử lý...");
+        mProgressDialog.setCanceledOnTouchOutside(false);
+        mProgressDialog.show();
+    }
+
+    public void createNewUser(String idUser, String userName, String password, String email, String address, String company, String hownTown, String hobby, int age, String gender) {
+        imagesAvatarUrl = "https://firebasestorage.googleapis.com/v0/b/bloodbank-1e50e.appspot.com/o/avatar_default.jpg?alt=media&token=045117c4-b4b0-45a4-a034-b2f74e3d522c";
+        user = new User(idUser, userName, password, email, address, company,hownTown,hobby,age, gender, imagesAvatarUrl);
+        mFirebaseDatabase.child(ConstantUtils.TREE_USER).child(idUser).setValue(user);
+    }
+
+    private String getValueGender() {
+        int selectId = radioGroupGender.getCheckedRadioButtonId();
+        RadioButton radioSexButton = findViewById(selectId);
+        return radioSexButton.getText().toString();
+    }
+
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
 
-//    private void showDialog() {
-//        mProgressDialog.setMessage("Loading...");
-//        mProgressDialog.setCanceledOnTouchOutside(false);
-//        mProgressDialog.show();
-//    }
-//
-//    private void hideDialog() {
-//        mProgressDialog.dismiss();
-//    }
+
 }
