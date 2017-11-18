@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "393771538752",
+    "firebase_url": "https://a-trung-roi.firebaseio.com",
+    "project_id": "a-trung-roi",
+    "storage_bucket": "a-trung-roi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:393771538752:android:a8e8465f6f540710",
+        "android_client_info": {
+          "package_name": "com.atrungroi.atrungroi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "393771538752-9tj7dn7quttosnjeqauk1t1vbh550apa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.atrungroi.atrungroi",
+            "certificate_hash": "409a226ecbda7abd8dd0b45de85b55839242012f"
+          }
+        },
+        {
+          "client_id": "393771538752-346b7jen7vn9939h3jr10175km9j4hsq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYhMjJT9s2KRvvfbRMNHYqWx4powcTfUk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "393771538752-346b7jen7vn9939h3jr10175km9j4hsq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

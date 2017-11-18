@@ -1,4 +1,4 @@
-package com.atrungroi.atrungroi.ui;
+package com.atrungroi.atrungroi.pref;
 
 import android.app.Application;
 import android.os.SystemClock;
@@ -6,13 +6,13 @@ import android.os.SystemClock;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by huyphamna on 10/11/2017.
+ * Created by huyphamna.
  */
 
 public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        SystemClock.sleep(TimeUnit.SECONDS.toMillis(5));
+        SystemClock.sleep(TimeUnit.SECONDS.toMillis(2));
     }
 }
