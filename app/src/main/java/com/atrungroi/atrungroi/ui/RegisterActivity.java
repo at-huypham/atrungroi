@@ -1,20 +1,37 @@
 package com.atrungroi.atrungroi.ui;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.atrungroi.atrungroi.R;
+import com.atrungroi.atrungroi.models.User;
+import com.atrungroi.atrungroi.pref.ConstantUtils;
+import com.atrungroi.atrungroi.pref.ToastUtil;
 import com.atrungroi.atrungroi.ui.menu.MenuActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Created by huyphamna.
@@ -29,17 +46,28 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText mEdtAddress;
     private EditText mEdtCompany;
     private EditText mEdtAge;
+    private EditText mEdtHomeTown;
+    private EditText mEdtHobby;
+    private RadioGroup radioGroupGender;
     private Button mBtnSignin;
+    private ProgressDialog mProgressDialog;
+    private FirebaseAuth auth;
+    private DatabaseReference mFirebaseDatabase;
+    private User user;
+    private String imagesAvatarUrl;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
+        mFirebaseDatabase = FirebaseDatabase.getInstance().getReference();
+        auth = FirebaseAuth.getInstance();
         initView();
         initToolbar();
         setButtonSignin();
+
     }
+
 
     private void initView() {
         mToolbar = findViewById(R.id.toobar);
@@ -50,7 +78,10 @@ public class RegisterActivity extends AppCompatActivity {
         mEdtAddress = findViewById(R.id.edtAddressRegister);
         mEdtCompany = findViewById(R.id.edtCompanyRegister);
         mEdtAge = findViewById(R.id.edtAgeRegister);
+        mEdtHomeTown = findViewById(R.id.edtHomeTown);
+        mEdtHobby = findViewById(R.id.edtHobby);
         mBtnSignin = findViewById(R.id.btnSignin);
+        radioGroupGender = findViewById(R.id.radioGender);
     }
 
     private void initToolbar() {
@@ -108,15 +139,73 @@ public class RegisterActivity extends AppCompatActivity {
                 mBtnSignin.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        startActivity(new Intent(RegisterActivity.this, MenuActivity.class));
+                        setupRegisterFirebase();
                     }
                 });
             }
         }
     };
 
+    private void setupRegisterFirebase() {
+        final String userName = mEdtUsername.getText().toString().trim();
+        final String password = mEdtPassword.getText().toString().trim();
+        final String email = mEdtEmail.getText().toString().trim();
+        final String address = mEdtAddress.getText().toString().trim();
+        final String company = mEdtCompany.getText().toString().trim();
+        final int age = Integer.parseInt(mEdtAge.getText().toString().trim());
+        final String hownTown = mEdtHomeTown.getText().toString().trim();
+        final String hobby = mEdtHobby.getText().toString().trim();
+        final String gender = getValueGender();
+        showProgressDialog();
+        Log.d(ConstantUtils.TAG, userName + password + email + address + company + age);
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    FirebaseUser firebaseUser = auth.getCurrentUser();
+                    if (firebaseUser != null) {
+                        hideProgressDialog();
+                        ToastUtil.showShort(getApplicationContext(), "Đăng ký tài khoản thành công!");
+                        createNewUser(firebaseUser.getUid(), userName, password, email, address, company,hownTown,hobby,age, gender);
+                        startActivity(new Intent(RegisterActivity.this, MenuActivity.class));
+                    }
+                } else {
+                    hideProgressDialog();
+                    ToastUtil.showLong(getApplicationContext(), "Đăng ký thất bại! \n Error: " + task.getException().getMessage());
+                }
+            }
+        });
+
+    }
+
+    private void hideProgressDialog() {
+        mProgressDialog.dismiss();
+    }
+
+    public void showProgressDialog() {
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage("Đang xử lý...");
+        mProgressDialog.setCanceledOnTouchOutside(false);
+        mProgressDialog.show();
+    }
+
+    public void createNewUser(String idUser, String userName, String password, String email, String address, String company, String hownTown, String hobby, int age, String gender) {
+        imagesAvatarUrl = "https://firebasestorage.googleapis.com/v0/b/bloodbank-1e50e.appspot.com/o/avatar_default.jpg?alt=media&token=045117c4-b4b0-45a4-a034-b2f74e3d522c";
+        user = new User(idUser, userName, password, email, address, company,hownTown,hobby,age, gender, imagesAvatarUrl);
+        mFirebaseDatabase.child(ConstantUtils.TREE_USER).child(idUser).setValue(user);
+    }
+
+    private String getValueGender() {
+        int selectId = radioGroupGender.getCheckedRadioButtonId();
+        RadioButton radioSexButton = findViewById(selectId);
+        return radioSexButton.getText().toString();
+    }
+
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
+
+
 }

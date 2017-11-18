@@ -10,27 +10,6 @@
         android:orientation="vertical">
 
         <include layout="@layout/layout_toolbar" />
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginTop="15dp">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_account_white" />
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end|bottom"
-                android:background="@null"
-                android:src="@drawable/ic_camera" />
-        </FrameLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -55,7 +34,7 @@
                 android:backgroundTint="@color/colorBlackTransparent"
                 android:hint="Mật khẩu"
                 android:imeOptions="actionNext"
-                android:inputType="text" />
+                android:inputType="textPassword" />
 
             <EditText
                 android:id="@+id/edtEmailRegister"
@@ -84,6 +63,24 @@
                 android:imeOptions="actionNext"
                 android:inputType="text" />
 
+            <EditText
+                android:id="@+id/edtHomeTown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorBlackTransparent"
+                android:hint="Quê Quán"
+                android:imeOptions="actionNext"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/edtHobby"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorBlackTransparent"
+                android:hint="Sở thích"
+                android:imeOptions="actionNext"
+                android:inputType="text" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -105,6 +102,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:id="@+id/radioGender"
                     android:orientation="horizontal">
 
                     <RadioButton
@@ -119,6 +117,7 @@
 
                 </RadioGroup>
             </LinearLayout>
+
         </LinearLayout>
 
         <Button

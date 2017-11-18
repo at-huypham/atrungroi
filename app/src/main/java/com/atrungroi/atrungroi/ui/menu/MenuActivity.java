@@ -1,5 +1,6 @@
 package com.atrungroi.atrungroi.ui.menu;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,11 +20,16 @@ import android.widget.Toast;
 
 import com.atrungroi.atrungroi.R;
 import com.atrungroi.atrungroi.models.MenuObject;
+import com.atrungroi.atrungroi.pref.ToastUtil;
+import com.atrungroi.atrungroi.ui.MainActivity;
 import com.atrungroi.atrungroi.ui.fragment.CreateGAFragment;
 import com.atrungroi.atrungroi.ui.fragment.ListApproveGAFragment;
 import com.atrungroi.atrungroi.ui.fragment.ListGAFragment;
 import com.atrungroi.atrungroi.ui.fragment.ResultGAFragment;
 import com.atrungroi.atrungroi.ui.fragment.SettingFragment;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,11 +49,15 @@ public class MenuActivity extends AppCompatActivity {
     private int showMenu;
     private List<MenuObject> mMenuObjects;
     private int mPositionChoose = -1;
+    private DatabaseReference mFirebaseDatabase;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        mFirebaseDatabase = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
         initView();
         initToolbar();
         initDrawer();
@@ -70,6 +80,7 @@ public class MenuActivity extends AppCompatActivity {
         mMenuObjects.add(new MenuObject("Tạo give away mới", R.drawable.ic_create_ga));
         mMenuObjects.add(new MenuObject("Kết quả give away", R.drawable.ic_win_ga));
         mMenuObjects.add(new MenuObject("Thông tin", R.drawable.ic_setting));
+        mMenuObjects.add(new MenuObject("Đăng xuất", R.drawable.ic_setting));
 
         mMenuAdapter = new MenuAdapter(this, mMenuObjects, new MenuAdapter.OnItemClickListener() {
             @Override
@@ -113,6 +124,7 @@ public class MenuActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menuPost:
+
                 Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show();
                 return true;
         }
@@ -144,6 +156,12 @@ public class MenuActivity extends AppCompatActivity {
                         callFragment(new SettingFragment());
                         showMenu = 0;
                         break;
+                    case 5:
+                        mAuth.signOut();
+                        ToastUtil.showShort(getApplicationContext(), "Đăng xuất thành công");
+                        startActivity(new Intent(MenuActivity.this, MainActivity.class));
+                        finish();
+
                 }
                 showMenu(showMenu);
             }
