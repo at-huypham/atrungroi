@@ -24,24 +24,130 @@
                 android:hint="Tiêu đề"
                 android:imeOptions="actionNext"
                 android:inputType="text" />
+            />
 
-            <EditText
-                android:id="@+id/edtTimeGAStart"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorBlackTransparent"
-                android:hint="Thời gian bắt đầu"
-                android:imeOptions="actionNext"
-                android:inputType="text" />
+                android:gravity="center"
+                android:text="Thời gian bắt đầu"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/edtTimeGAEnd"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorBlackTransparent"
-                android:hint="Thời gian kết thúc"
-                android:imeOptions="actionNext"
-                android:inputType="text" />
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <EditText
+                    android:id="@+id/edtDateGAStart"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2.5"
+                    android:focusableInTouchMode="false"
+                    android:hint="Ngày bắt đầu" />
+
+                <Button
+                    android:id="@+id/btnDateStart"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:text="Chọn ngày"
+                    android:textAllCaps="false" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <EditText
+                    android:id="@+id/edtTimeGAStart"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="2.5"
+                    android:focusableInTouchMode="false"
+                    android:hint="Giờ bắt đầu" />
+
+                <Button
+                    android:id="@+id/btnTimeStart"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:text="Chọn giờ"
+                    android:textAllCaps="false" />
+            </LinearLayout>
+
+
+            <!--<EditText-->
+            <!--android:id="@+id/edtTimeGAStart"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:backgroundTint="@color/colorBlackTransparent"-->
+            <!--android:hint="Thời gian bắt đầu"-->
+            <!--android:imeOptions="actionNext"-->
+            <!--android:inputType="text" />-->
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Thời gian kết thúc"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <EditText
+                    android:id="@+id/edtDateGAEnd"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2.5"
+                    android:focusableInTouchMode="false"
+                    android:hint="Ngày kết thúc" />
+
+                <Button
+                    android:id="@+id/btnDateEnd"
+                    android:layout_width="0dp"
+                    android:focusableInTouchMode="false"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:text="Chọn ngày"
+                    android:textAllCaps="false" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <EditText
+                    android:id="@+id/edtTimeGAEnd"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="2.5"
+                    android:focusableInTouchMode="false"
+                    android:hint="Thời gian kết thúc" />
+
+                <Button
+                    android:id="@+id/btnTimeEnd"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:text="Chọn giờ"
+                    android:textAllCaps="false" />
+            </LinearLayout>
+
 
             <EditText
                 android:id="@+id/edtContentCreateGA"
@@ -49,10 +155,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:gravity="top|start"
-                android:hint="Mô tả nội dung"
+                android:hint="Nội dung"
                 android:inputType="textMultiLine"
                 android:labelFor="@+id/edtContentCreateGA"
-                android:maxHeight="150dp"
+                android:maxHeight="180dp"
                 android:maxLines="5"
                 android:minHeight="80dp"
                 android:scrollbars="vertical" />

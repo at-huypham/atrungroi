@@ -45,14 +45,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:id="@+id/tvTimePost"
                     android:text="Mon 30 Dec" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:drawableLeft="@drawable/ic_location"
-                    android:text="Da Nang" />
 
             </LinearLayout>
         </LinearLayout>

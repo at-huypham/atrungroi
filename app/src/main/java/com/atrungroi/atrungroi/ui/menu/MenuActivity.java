@@ -145,7 +145,7 @@ public class MenuActivity extends AppCompatActivity {
                         break;
                     case 2:
                         callFragment(new CreateGAFragment());
-                        showMenu = 1;
+                        showMenu = 0;
                         break;
                     case 3:
                         callFragment(new ResultGAFragment());

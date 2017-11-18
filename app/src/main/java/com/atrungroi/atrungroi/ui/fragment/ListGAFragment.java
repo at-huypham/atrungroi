@@ -5,10 +5,8 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +14,13 @@ import android.widget.TextView;
 
 import com.atrungroi.atrungroi.R;
 import com.atrungroi.atrungroi.models.News;
+import com.atrungroi.atrungroi.pref.ConstantUtils;
 import com.atrungroi.atrungroi.ui.DetailActivity;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +34,7 @@ public class ListGAFragment extends Fragment {
     private ListGAAdapter mAdapter;
     private List<News> mNews;
     private TextView mTvError;
+    private DatabaseReference mFirebaseDatabase;
 
     @Nullable
     @Override
@@ -43,8 +48,45 @@ public class ListGAFragment extends Fragment {
         } else {
             mTvError.setVisibility(View.VISIBLE);
         }
+        setupFirebase();
 //        initListGA();
         return view;
+    }
+
+    private void setupFirebase() {
+        mFirebaseDatabase = FirebaseDatabase.getInstance().getReference();
+        mFirebaseDatabase.child(ConstantUtils.TREE_EVENT).orderByChild("timePost").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                if (dataSnapshot.exists()) {
+//                    Discuss discuss = dataSnapshot.getValue(Discuss.class);
+//                    if (discuss != null && !list.contains(discuss)) {
+//                        list.add(discuss);
+//                        adapter.notifyDataSetChanged();
+//                    }
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void initView(View view) {
