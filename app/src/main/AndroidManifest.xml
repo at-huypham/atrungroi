@@ -60,5 +60,17 @@
 
         </activity>
 
+        <activity android:name=".ui.ShowScanQR"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".NotificationActivity" />
+
+        <receiver android:name=".pref.AlarmReceiver">
+            <intent-filter>
+                <action android:name="android.media.action.DISPLAY_NOTIFICATION" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
     </application>
 </manifest>

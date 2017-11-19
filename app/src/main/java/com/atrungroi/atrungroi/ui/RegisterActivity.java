@@ -222,4 +222,6 @@ public class RegisterActivity extends AppCompatActivity {
         RadioButton radioSexButton = findViewById(selectId);
         return radioSexButton.getText().toString();
     }
+
+
 }

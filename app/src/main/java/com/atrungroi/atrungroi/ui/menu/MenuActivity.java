@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,20 +20,32 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.atrungroi.atrungroi.R;
+import com.atrungroi.atrungroi.models.Event;
 import com.atrungroi.atrungroi.models.MenuObject;
+import com.atrungroi.atrungroi.models.User;
+import com.atrungroi.atrungroi.pref.ConstantUtils;
 import com.atrungroi.atrungroi.pref.ToastUtil;
 import com.atrungroi.atrungroi.ui.MainActivity;
+import com.atrungroi.atrungroi.ui.ShowScanQR;
 import com.atrungroi.atrungroi.ui.fragment.CreateGAFragment;
 import com.atrungroi.atrungroi.ui.fragment.ListApproveGAFragment;
 import com.atrungroi.atrungroi.ui.fragment.ListGAFragment;
 import com.atrungroi.atrungroi.ui.fragment.ResultGAFragment;
 import com.atrungroi.atrungroi.ui.fragment.SettingFragment;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.atrungroi.atrungroi.pref.ConstantUtils.TAG;
 
 /**
  * Created by huyphamna.
@@ -51,6 +64,7 @@ public class MenuActivity extends AppCompatActivity {
     private int mPositionChoose = -1;
     private DatabaseReference mFirebaseDatabase;
     private FirebaseAuth mAuth;
+    private User user;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,6 +77,7 @@ public class MenuActivity extends AppCompatActivity {
         initDrawer();
         initRecyclerViewMenu();
         callFragment(new ListGAFragment());
+        scanQr();
     }
 
     private void initView() {
@@ -105,7 +120,7 @@ public class MenuActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         this.mMenu = menu;
         getMenuInflater().inflate(R.menu.menu_create, menu);
-        menu.findItem(R.id.menuPost).setVisible(false);
+        menu.findItem(R.id.menuPost).setVisible(true);
         return true;
     }
 
@@ -124,7 +139,8 @@ public class MenuActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menuPost:
-                Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MenuActivity.this, ShowScanQR.class));
+                finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -137,7 +153,7 @@ public class MenuActivity extends AppCompatActivity {
                 switch (pos) {
                     case 0:
                         callFragment(new ListGAFragment());
-                        showMenu = 0;
+                        showMenu = 1;
                         break;
                     case 1:
                         callFragment(new ListApproveGAFragment());
@@ -212,5 +228,86 @@ public class MenuActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragmentContainer, fragment);
         transaction.commit();
+    }
+
+//    private void getUser(String id) {
+//        Query query = mFirebaseDatabase.child(ConstantUtils.TREE_USER).child(id);
+//        query.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                if (dataSnapshot.exists()) {
+//                    Log.d(TAG, "userabcd: " + dataSnapshot.getValue(User.class));
+//                    user = dataSnapshot.getValue(User.class);
+//                    Toast.makeText(MenuActivity.this, user.getAddress().toString(), Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//    }
+
+    private void scanQr(){
+        final String a = getIntent().getStringExtra("code");
+        Toast.makeText(this, "" +  a, Toast.LENGTH_SHORT).show();
+
+        Query query = mFirebaseDatabase.child(ConstantUtils.TREE_EVENT).orderByChild("idEvent").equalTo(a);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    FirebaseUser firebaseUser = mAuth.getCurrentUser();
+//                    getUser(firebaseUser.getUid());
+
+                    mFirebaseDatabase.child(ConstantUtils.TREE_EVENT).child(a).child("userJoined").child(firebaseUser.getUid()).setValue(true);
+                    Toast.makeText(MenuActivity.this, "OK", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(MenuActivity.this, "ERROR", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+//        mFirebaseDatabase.child(ConstantUtils.TREE_EVENT).orderByChild("idEvent").addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                if (dataSnapshot.exists()) {
+//                    Event event = dataSnapshot.getValue(Event.class);
+////                    Log.d(TAG, "onChildAdded: " + event.getContent());
+//                    if (a.equals(event.getIdEvent())) {
+//                    } else {
+//                        Toast.makeText(MenuActivity.this, "FALSE", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
     }
 }
