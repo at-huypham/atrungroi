@@ -33,4 +33,8 @@ public class PrefManager {
     public boolean isFirstTime() {
         return mPreferences.getBoolean(IS_FIRST_TIME_LAUCH, true);
     }
+
+    public String tokenUser() {
+        return mPreferences.getString("regId", "none");
+    }
 }

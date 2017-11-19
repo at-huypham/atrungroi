@@ -13,11 +13,11 @@ class Event {
     var imagesEvent: String = ""
     var idUser: String? =""
     var nameUser: String? = ""
-    var isCheckQR: String? = ""
+    var checkQR: String? = ""
 
     constructor()
 
-    constructor(idEvent: String?, title: String?, dateTimeStart: String?, dateTimeEnd: String?, timePost: String?, content: String?, imagesEvent: String, idUser: String?, nameUser: String?, isCheckQR: String?) {
+    constructor(idEvent: String?, title: String?, dateTimeStart: String?, dateTimeEnd: String?, timePost: String?, content: String?, imagesEvent: String, idUser: String?, nameUser: String?, checkQR: String?) {
         this.idEvent = idEvent
         this.title = title
         this.dateTimeStart = dateTimeStart
@@ -27,7 +27,7 @@ class Event {
         this.imagesEvent = imagesEvent
         this.idUser = idUser
         this.nameUser = nameUser
-        this.isCheckQR = isCheckQR
+        this.checkQR = checkQR
     }
 
 

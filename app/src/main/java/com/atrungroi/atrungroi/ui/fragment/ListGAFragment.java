@@ -1,6 +1,12 @@
 package com.atrungroi.atrungroi.ui.fragment;
 
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,7 +20,9 @@ import android.view.ViewGroup;
 import com.atrungroi.atrungroi.R;
 import com.atrungroi.atrungroi.models.Event;
 import com.atrungroi.atrungroi.pref.ConstantUtils;
+import com.atrungroi.atrungroi.services.NotificationAcessDonation;
 import com.atrungroi.atrungroi.ui.DetailActivity;
+import com.atrungroi.atrungroi.ui.MainActivity;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,6 +30,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import static com.atrungroi.atrungroi.pref.ConstantUtils.TAG;
@@ -98,9 +107,57 @@ public class ListGAFragment extends Fragment {
         mAdapter.setPostListener(new ListGAAdapter.OnClickPostListener() {
             @Override
             public void clickPost(int position, View view) {
-                startActivity(new Intent(getActivity(), DetailActivity.class));
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
+                Event event =  mListEvent.get(position);
+                intent.putExtra("title", mListEvent.get(position).getTitle());
+                intent.putExtra("dateTimeStart", mListEvent.get(position).getDateTimeStart());
+                intent.putExtra("dateTimeEnd", mListEvent.get(position).getDateTimeEnd());
+                intent.putExtra("timePost", mListEvent.get(position).getTimePost());
+                intent.putExtra("content", mListEvent.get(position).getContent());
+                intent.putExtra("imagesEvent", mListEvent.get(position).getImagesEvent());
+                intent.putExtra("idUser", mListEvent.get(position).getIdUser());
+                intent.putExtra("nameUser", mListEvent.get(position).getNameUser());
+//                 Show qr code
+                intent.putExtra("idEvent", mListEvent.get(position).getIdEvent());
+                intent.putExtra("isCheck", mListEvent.get(position).getCheckQR());
+                startActivity(intent);
             }
         });
     }
+
+
+    private void scheduleNotification(Notification notification) {
+        AlarmManager alarmManager = (AlarmManager)getContext().getSystemService(Context.ALARM_SERVICE);
+        Intent notificationIntent = new Intent(getContext(), NotificationAcessDonation.class);
+        notificationIntent.putExtra(NotificationAcessDonation.NOTIFICATION_ID, 1);
+        notificationIntent.putExtra(NotificationAcessDonation.NOTIFICATION, notification);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), 100, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.SECOND, 30);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
+        }
+    }
+
+    private  Notification getNotificationAcessDonation() {
+        Intent notificationIntent = new Intent(getContext(), MainActivity.class);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(getContext());
+        stackBuilder.addParentStack(MainActivity.class);
+        stackBuilder.addNextIntent(notificationIntent);
+        PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        long[] pattern = {0, 300, 0};
+        Notification.Builder builder = new Notification.Builder(getContext());
+        builder.setContentText("Bạn đã trúng rồi!");
+        builder.setContentTitle("Thông báo give away");
+        builder.setTicker("Thông báo mới!");
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setDefaults(Notification.DEFAULT_SOUND);
+        builder.setContentIntent(pendingIntent);
+        builder.setVibrate(pattern);
+        builder.setAutoCancel(true);
+        return builder.build();
+
+    }
+
 
 }

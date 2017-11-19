@@ -121,6 +121,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_button_k_color_1"
                 android:textColor="@color/colorFlatWhite"
+                android:id="@+id/btnJoinNow"
                 android:text="Tham gia ngay"
                 />
         </LinearLayout>
