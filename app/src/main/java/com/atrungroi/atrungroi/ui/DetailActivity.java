@@ -1,16 +1,27 @@
 package com.atrungroi.atrungroi.ui;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.atrungroi.atrungroi.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -26,6 +37,10 @@ public class DetailActivity extends AppCompatActivity {
     private ImageView mImgIllustration;
     private ImageView mImgQRCode;
     private TextView mTvTimePost;
+    private FirebaseAuth mFirebaseAuth;
+    private DatabaseReference mFirebaseDatabase;
+    String a;
+    String idUserTemp;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,6 +48,8 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         initView();
         initToolbar();
+        mFirebaseDatabase = FirebaseDatabase.getInstance().getReference();
+        mFirebaseAuth = FirebaseAuth.getInstance();
         mTvName = findViewById(R.id.tvName);
         mTvTittleGA = findViewById(R.id.tvTittleGA);
         mTvContentGA = findViewById(R.id.tvContentGA);
@@ -41,7 +58,7 @@ public class DetailActivity extends AppCompatActivity {
         mTvTimePost = findViewById(R.id.tvTimePost);
 
         Bundle bundle = getIntent().getExtras();
-        if(bundle != null) {
+        if (bundle != null) {
             String title = bundle.getString("title", "");
             String dateTimeStart = bundle.getString("dateTimeStart", "");
             String dateTimeEnd = bundle.getString("dateTimeEnd", "");
@@ -51,11 +68,19 @@ public class DetailActivity extends AppCompatActivity {
             String nameUser = bundle.getString("nameUser", "");
             String idEvent = bundle.getString("idEvent", "");
             String isCheck = bundle.getString("isCheck", "");
+            a = idEvent;
+            idUserTemp = idUser;
             mTvName.setText(nameUser);
             mTvTittleGA.setText(title);
-            mTvTimePost.setText( dateTimeStart + " => " + dateTimeEnd);
+            mTvTimePost.setText(dateTimeStart + " => " + dateTimeEnd);
             mTvContentGA.setText(content);
             loadImageFromUrl(imagesEvent, mImgIllustration);
+            FirebaseUser firebaseUser = mFirebaseAuth.getCurrentUser();
+            if (idUserTemp.equals(firebaseUser.getUid())){
+                genericQR();
+            } else {
+                mImgQRCode.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -83,19 +108,10 @@ public class DetailActivity extends AppCompatActivity {
             case android.R.id.home:
                 onBackPressed();
                 return true;
-            case R.id.menuScan:
-                Toast.makeText(this, "Show camera or choose from library", Toast.LENGTH_SHORT).show();
-                return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_scan_qr, menu);
-        menu.findItem(R.id.menuScan);
-        return super.onCreateOptionsMenu(menu);
-    }
 
     @Override
     public void onBackPressed() {
@@ -110,4 +126,21 @@ public class DetailActivity extends AppCompatActivity {
                 .resize(500, 500)
                 .into(imageView);
     }
+
+    private void genericQR() {
+
+        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+        try {
+            BitMatrix bitMatrix = multiFormatWriter.encode(a, BarcodeFormat.QR_CODE, 200, 200);
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+//                    Intent intent = new Intent(context, QrActivity.class);
+//                    intent.putExtra("pic",bitmap);
+//                    context.startActivity(intent);
+            mImgQRCode.setImageBitmap(bitmap);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

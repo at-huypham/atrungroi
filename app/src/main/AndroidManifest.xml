@@ -61,6 +61,8 @@
 
         </activity>
 
+        <activity android:name=".ui.ShowScanQR"
+            android:screenOrientation="portrait"/>
         <service
             android:name=".services.MyFirebaseMessagingService">
             <intent-filter>

@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.atrungroi.atrungroi.R;
 import com.atrungroi.atrungroi.models.Event;
@@ -65,7 +66,7 @@ public class ListGAAdapter extends RecyclerView.Adapter<ListGAAdapter.ViewHolder
             mTvNameUserPost = itemView.findViewById(R.id.tvNameUserPost);
             mBtnJoinNow = itemView.findViewById(R.id.btnJoinNow);
             mLlTicket.setOnClickListener(this);
-//            mBtnJoinNow.setOnClickListener(this);
+            mBtnJoinNow.setOnClickListener(this);
         }
 
         private void setData(int position) {
@@ -82,6 +83,10 @@ public class ListGAAdapter extends RecyclerView.Adapter<ListGAAdapter.ViewHolder
             switch (view.getId()) {
                 case R.id.llTicket:
 //                    Toast.makeText(mContext, "Pos: " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.btnJoinNow:
+                    Toast.makeText(mContext, "Bạn đã tham gia thành công", Toast.LENGTH_SHORT).show();
+                    mBtnJoinNow.setText("Đã tham gia");
                     break;
             }
 

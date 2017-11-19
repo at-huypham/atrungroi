@@ -251,7 +251,7 @@ public class MenuActivity extends AppCompatActivity {
 
     private void scanQr(){
         final String a = getIntent().getStringExtra("code");
-        Toast.makeText(this, "" +  a, Toast.LENGTH_SHORT).show();
+
 
         Query query = mFirebaseDatabase.child(ConstantUtils.TREE_EVENT).orderByChild("idEvent").equalTo(a);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -259,13 +259,14 @@ public class MenuActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                    Toast.makeText(MenuActivity.this, "Tham gia thành công", Toast.LENGTH_SHORT).show();
 //                    getUser(firebaseUser.getUid());
 
                     mFirebaseDatabase.child(ConstantUtils.TREE_EVENT).child(a).child("userJoined").child(firebaseUser.getUid()).setValue(true);
-                    Toast.makeText(MenuActivity.this, "OK", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(MenuActivity.this, "OK", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    Toast.makeText(MenuActivity.this, "ERROR", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(MenuActivity.this, "ERROR", Toast.LENGTH_SHORT).show();
 
                 }
             }

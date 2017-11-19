@@ -57,7 +57,7 @@ public class ListGAFragment extends Fragment {
     }
 
     private void setupFirebase() {
-
+        mFirebaseDatabase.keepSynced(true);
         mFirebaseDatabase.child(ConstantUtils.TREE_EVENT).orderByChild("dateTimeEnd").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
