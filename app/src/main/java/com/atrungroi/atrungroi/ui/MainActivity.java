@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.atrungroi.atrungroi.R;
+import com.atrungroi.atrungroi.pref.PrefManager;
 import com.atrungroi.atrungroi.pref.ToastUtil;
 import com.atrungroi.atrungroi.ui.menu.MenuActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -37,17 +38,20 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mFirebaseDatabase;
     private ProgressDialog mProgressDialog;
+    private PrefManager mPrefManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        mPrefManager = new PrefManager(this);
         mFirebaseDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             startActivity(new Intent(MainActivity.this, MenuActivity.class));
             finish();
         }
+
         initView();
         setButtonLoginAndRegister();
     }

@@ -13,14 +13,6 @@ public class ConstantUtils {
     public static final String URL_AVATAR = "urlAvatar";
 
 
-    // broadcast receiver intent filters
-    public static final String REGISTRATION_COMPLETE = "registrationComplete";
-    public static final String PUSH_NOTIFICATION = "pushNotification";
-
-    // id to handle the notification in the notification tray
-    public static final int NOTIFICATION_ID = 100;
-    public static final int NOTIFICATION_ID_BIG_IMAGE = 101;
-
 //  TREE EVENT
     public static final String TREE_EVENT = "events";
     public static final String EVENT_TITLE = "title";
@@ -31,5 +23,16 @@ public class ConstantUtils {
     public static final String URL_IMAGES_EVENT = "urlImageEvent";
 
     public static final String TREE_USER =  "users";
+    public static final String SHARED_PREF = "ah_firebase";
+
+
+    // broadcast receiver intent filters
+    public static final String REGISTRATION_COMPLETE = "registrationComplete";
+    public static final String PUSH_NOTIFICATION = "pushNotification";
+
+    // id to handle the notification in the notification tray
+    public static final int NOTIFICATION_ID = 100;
+    public static final int NOTIFICATION_ID_BIG_IMAGE = 101;
+
 
 }

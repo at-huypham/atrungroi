@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.atrungroi.atrungroi.R;
 import com.atrungroi.atrungroi.models.MenuObject;
@@ -124,7 +123,7 @@ public class MenuActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menuPost:
-                Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show();
                 return true;
         }
         return super.onOptionsItemSelected(item);

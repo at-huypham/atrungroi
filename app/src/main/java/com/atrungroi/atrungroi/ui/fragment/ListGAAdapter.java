@@ -5,10 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.atrungroi.atrungroi.R;
 import com.atrungroi.atrungroi.models.Event;
@@ -53,6 +53,7 @@ public class ListGAAdapter extends RecyclerView.Adapter<ListGAAdapter.ViewHolder
         private TextView mTvTimePostEnd;
         private TextView mTvNameUserPost;
         private LinearLayout mLlTicket;
+        private Button mBtnJoinNow;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -62,7 +63,9 @@ public class ListGAAdapter extends RecyclerView.Adapter<ListGAAdapter.ViewHolder
             mLlTicket = itemView.findViewById(R.id.llTicket);
             mTvTimePostEnd = itemView.findViewById(R.id.tvTimePostEnd);
             mTvNameUserPost = itemView.findViewById(R.id.tvNameUserPost);
+            mBtnJoinNow = itemView.findViewById(R.id.btnJoinNow);
             mLlTicket.setOnClickListener(this);
+//            mBtnJoinNow.setOnClickListener(this);
         }
 
         private void setData(int position) {
@@ -78,7 +81,7 @@ public class ListGAAdapter extends RecyclerView.Adapter<ListGAAdapter.ViewHolder
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.llTicket:
-                    Toast.makeText(mContext, "Pos: " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, "Pos: " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
                     break;
             }
 
@@ -105,4 +108,6 @@ public class ListGAAdapter extends RecyclerView.Adapter<ListGAAdapter.ViewHolder
     public void setPostListener(OnClickPostListener postListener) {
         this.mPostListener = postListener;
     }
+
+
 }
